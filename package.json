@@ -1,0 +1,13 @@
+{
+  "name": "open-the-box-football",
+  "version": "3.0.0",
+  "description": "Open The Box - Football Random Box Desktop App",
+  "main": "main.js",
+  "author": "Open The Box",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^37.2.6"
+  }
+}

@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+
+<html
+    lang="fa"
+    dir="rtl"
+>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        http-equiv="Content-Security-Policy"
+        content="
+        default-src 'self' data:;
+        img-src 'self' data: blob:;
+        style-src 'self' 'unsafe-inline';
+        script-src 'self';
+        "
+    >
+
+    <title>
+        Open The Box Football
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<div id="app">
+
+
+    <!-- پس زمینه -->
+
+    <div
+        id="backgroundLayer"
+        class="background-layer"
+    ></div>
+
+
+    <!-- ======================================
+         هدر
+    ======================================= -->
+
+    <header class="topbar">
+
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                ⚽
+            </div>
+
+            <div>
+
+                <div
+                    id="brandTitle"
+                    class="brand-title"
+                >
+                    OPEN THE BOX
+                </div>
+
+                <div class="brand-subtitle">
+                    Football Edition
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="main-title">
+
+            <span id="mainTitle">
+                Tap one to open
+            </span>
+
+        </div>
+
+
+        <div class="top-actions">
+
+            <button
+                id="randomButton"
+                class="button primary"
+            >
+                🎲 شانسی
+            </button>
+
+
+            <button
+                id="editButton"
+                class="button"
+            >
+                ✏️ ویرایش
+            </button>
+
+
+            <button
+                id="saveButton"
+                class="button"
+            >
+                💾 ذخیره
+            </button>
+
+
+            <button
+                id="loadButton"
+                class="button"
+            >
+                📂 باز کردن
+            </button>
+
+
+            <button
+                id="fullscreenButton"
+                class="button"
+            >
+                ⛶ تمام صفحه
+            </button>
+
+
+            <button
+                id="settingsButton"
+                class="button"
+            >
+                ⚙️
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- ======================================
+         نوار ابزار
+    ======================================= -->
+
+    <section class="toolbar">
+
+
+        <div class="toolbar-group">
+
+            <span>
+                تعداد:
+            </span>
+
+
+            <button
+                class="count-button active"
+                data-count="15"
+            >
+                15
+            </button>
+
+
+            <button
+                class="count-button"
+                data-count="20"
+            >
+                20
+            </button>
+
+
+            <button
+                class="count-button"
+                data-count="25"
+            >
+                25
+            </button>
+
+
+            <button
+                class="count-button"
+                data-count="30"
+            >
+                30
+            </button>
+
+
+            <button
+                class="count-button"
+                data-count="50"
+            >
+                50
+            </button>
+
+
+            <button
+                class="count-button"
+                data-count="100"
+            >
+                100
+            </button>
+
+
+            <button
+                id="customCountButton"
+                class="count-button"
+            >
+                دلخواه
+            </button>
+
+        </div>
+
+
+        <div class="toolbar-group">
+
+            <button
+                id="shuffleButton"
+                class="small-button"
+            >
+                🔀 مخلوط
+            </button>
+
+
+            <button
+                id="resetButton"
+                class="small-button"
+            >
+                🔄 ریست
+            </button>
+
+
+            <button
+                id="openAllButton"
+                class="small-button"
+            >
+                👁️ همه
+            </button>
+
+
+            <button
+                id="closeAllButton"
+                class="small-button"
+            >
+                🙈 بستن
+            </button>
+
+        </div>
+
+
+        <div class="toolbar-group">
+
+            <label>
+                طرح:
+            </label>
+
+
+            <select id="themeSelect">
+
+                <option value="wood">
+                    🪵 چوبی
+                </option>
+
+                <option value="blue">
+                    💙 آبی
+                </option>
+
+                <option value="neon">
+                    ⚡ نئونی
+                </option>
+
+                <option value="gold">
+                    🏆 طلایی
+                </option>
+
+                <option value="stone">
+                    🪨 سنگی
+                </option>
+
+            </select>
+
+        </div>
+
+    </section>
+
+
+    <!-- ======================================
+         محتوای قابل اسکرول
+    ======================================= -->
+
+    <main
+        id="scrollArea"
+        class="scroll-area"
+    >
+
+        <div class="scroll-content">
+
+
+            <div
+                id="board"
+                class="board"
+            ></div>
+
+
+            <div class="bottom-space"></div>
+
+
+        </div>
+
+    </main>
+
+
+    <!-- ======================================
+         وضعیت پایین
+    ======================================= -->
+
+    <footer class="statusbar">
+
+
+        <div>
+
+            باز شده:
+
+            <strong id="openedCount">
+                0
+            </strong>
+
+            /
+
+            <strong id="totalCount">
+                15
+            </strong>
+
+        </div>
+
+
+        <div id="statusText">
+
+            یک خانه را انتخاب کن
+
+        </div>
+
+
+        <div>
+
+            نسخه 3.0
+
+        </div>
+
+    </footer>
+
+
+    <!-- ======================================
+         Editor
+    ======================================= -->
+
+    <div
+        id="editorModal"
+        class="modal hidden"
+    >
+
+        <div class="editor-modal">
+
+
+            <div class="modal-header">
+
+                <div>
+
+                    <h2>
+                        ویرایش خانه‌ها
+                    </h2>
+
+                    <p>
+                        برای هر خانه عکس، بازیکن، کشور یا تیم قرار بده.
+                    </p>
+
+                </div>
+
+
+                <button
+                    id="closeEditor"
+                    class="close-button"
+                >
+                    ✕
+                </button>
+
+            </div>
+
+
+            <div class="editor-tools">
+
+                <button
+                    id="clearImagesButton"
+                    class="small-button"
+                >
+                    🗑️ حذف عکس‌ها
+                </button>
+
+
+                <button
+                    id="clearTextsButton"
+                    class="small-button"
+                >
+                    🧹 پاک کردن متن
+                </button>
+
+            </div>
+
+
+            <div
+                id="editorItems"
+                class="editor-items"
+            ></div>
+
+
+            <div class="modal-footer">
+
+                <button
+                    id="saveEditorButton"
+                    class="button primary"
+                >
+                    💾 ذخیره تغییرات
+                </button>
+
+
+                <button
+                    id="cancelEditorButton"
+                    class="button"
+                >
+                    لغو
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ======================================
+         Settings
+    ======================================= -->
+
+    <div
+        id="settingsModal"
+        class="modal hidden"
+    >
+
+        <div class="settings-modal">
+
+
+            <div class="modal-header">
+
+                <h2>
+                    ⚙️ تنظیمات
+                </h2>
+
+
+                <button
+                    id="closeSettings"
+                    class="close-button"
+                >
+                    ✕
+                </button>
+
+            </div>
+
+
+            <div class="settings-grid">
+
+
+                <label>
+
+                    عنوان اصلی
+
+                    <input
+                        id="titleInput"
+                        type="text"
+                        value="Tap one to open"
+                    >
+
+                </label>
+
+
+                <label>
+
+                    نام برنامه
+
+                    <input
+                        id="brandInput"
+                        type="text"
+                        value="OPEN THE BOX"
+                    >
+
+                </label>
+
+
+                <label>
+
+                    رنگ شماره
+
+                    <input
+                        id="numberColorInput"
+                        type="color"
+                        value="#111111"
+                    >
+
+                </label>
+
+
+                <label>
+
+                    اندازه شماره
+
+                    <input
+                        id="numberSizeInput"
+                        type="range"
+                        min="25"
+                        max="120"
+                        value="65"
+                    >
+
+                </label>
+
+
+                <label>
+
+                    اندازه عکس
+
+                    <input
+                        id="imageSizeInput"
+                        type="range"
+                        min="30"
+                        max="100"
+                        value="75"
+                    >
+
+                </label>
+
+
+                <label>
+
+                    انیمیشن
+
+                    <select id="animationSelect">
+
+                        <option value="flip">
+                            چرخش
+                        </option>
+
+                        <option value="zoom">
+                            زوم
+                        </option>
+
+                        <option value="fade">
+                            محو
+                        </option>
+
+                    </select>
+
+                </label>
+
+
+                <label>
+
+                    صدا
+
+                    <select id="soundSelect">
+
+                        <option value="on">
+                            روشن
+                        </option>
+
+                        <option value="off">
+                            خاموش
+                        </option>
+
+                    </select>
+
+                </label>
+
+
+                <label>
+
+                    پس‌زمینه
+
+                    <select id="backgroundSelect">
+
+                        <option value="sky">
+                            آسمان
+                        </option>
+
+                        <option value="dark">
+                            تیره
+                        </option>
+
+                        <option value="stadium">
+                            استادیوم
+                        </option>
+
+                        <option value="gradient">
+                            گرادیان
+                        </option>
+
+                    </select>
+
+                </label>
+
+
+                <label>
+
+                    ارتفاع هر خانه
+
+                    <input
+                        id="cardHeightInput"
+                        type="range"
+                        min="120"
+                        max="300"
+                        value="190"
+                    >
+
+                </label>
+
+
+                <label>
+
+                    فاصله خانه‌ها
+
+                    <input
+                        id="gapInput"
+                        type="range"
+                        min="5"
+                        max="50"
+                        value="22"
+                    >
+
+                </label>
+
+            </div>
+
+
+            <div class="settings-actions">
+
+                <button
+                    id="applySettings"
+                    class="button primary"
+                >
+                    اعمال تنظیمات
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ======================================
+         Random
+    ======================================= -->
+
+    <div
+        id="randomModal"
+        class="modal random-modal hidden"
+    >
+
+        <div class="random-box">
+
+            <div class="random-title">
+                🎲 در حال انتخاب...
+            </div>
+
+
+            <div
+                id="randomNumber"
+                class="random-number"
+            >
+                1
+            </div>
+
+
+            <div class="random-subtitle">
+                خانه انتخاب شد
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ======================================
+         Toast
+    ======================================= -->
+
+    <div
+        id="toast"
+        class="toast"
+    >
+        آماده
+    </div>
+
+
+</div>
+
+
+<script src="app.js"></script>
+
+</body>
+
+</html>
